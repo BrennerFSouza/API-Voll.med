@@ -1,12 +1,12 @@
 package med.voll.apivollmed.controller;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.apivollmed.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -50,6 +50,12 @@ public class MedicoController {
         medico.excluir();
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        Medico medico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoAtualizacaoMedico(medico));
     }
 
 }
